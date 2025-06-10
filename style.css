@@ -1,0 +1,25 @@
+.hero {
+  background-image: url('https://your-hero-bg.jpg');
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  background: rgba(0,0,0,0.4);
+  position: absolute;
+  inset: 0;
+}
+.animate-fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s forwards;
+}
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up.delay-200 { animation-delay: 0.2s; }
+.animate-bounce { animation: bounce 2s infinite; }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}

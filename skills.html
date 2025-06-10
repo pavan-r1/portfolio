@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills | Pavan R</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind CSS dark mode configuration
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {},
+            }
+        }
+    </script>
+    <style>
+        /* Base background for dark mode (can be overridden by JS for theme preference) */
+        body {
+            background-color: #0d1117; /* GitHub Dark default */
+        }
+
+        /* Optional: Custom gradient background to subtly match the sample */
+        .gradient-bg {
+            background-image: radial-gradient(at 0% 0%, #1e3a8a 0%, transparent 50%),
+                              radial-gradient(at 100% 100%, #3b0764 0%, transparent 50%);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* --- Custom CSS for Lines (simplified representation) --- */
+
+        /* Main skills heading box styling */
+        .skills-heading-box {
+            position: relative;
+            z-index: 10; /* Ensure box is above lines */
+            padding: 1rem 2.5rem; /* Adjusted padding */
+            border-radius: 0.75rem; /* rounded-xl */
+            background-color: #1a202c; /* bg-gray-900 (darker for box) */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-2xl */
+            border: 2px solid #3b82f6; /* border-blue-500 */
+            color: #93c5fd; /* text-blue-300 */
+        }
+
+        /* Vertical line from MY SKILLS box down to the horizontal line */
+        .skills-heading-box::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -3.5rem; /* Adjust to connect to the horizontal line */
+            width: 3px; /* Thicker line */
+            height: 3rem; /* Length of the vertical line */
+            background-color: #4a5568; /* Gray line color */
+            transform: translateX(-50%);
+            z-index: 5; /* Behind the box */
+        }
+
+        /* Horizontal line connecting the skill categories */
+        .skill-category-line {
+            position: absolute;
+            top: calc(50% + 1rem); /* Roughly centered vertically, below the MY SKILLS box */
+            left: 0;
+            right: 0;
+            height: 3px; /* Thicker horizontal line */
+            background-color: #4a5568; /* Gray line color */
+            z-index: 4; /* Behind category boxes */
+            margin-top: 2.5rem; /* Adjust this to push it down from the main heading */
+        }
+        
+        /* Vertical connectors from horizontal line to skill category boxes (desktop) */
+        @media (min-width: 768px) { /* md breakpoint */
+            .skill-card-connector::before {
+                content: '';
+                position: absolute;
+                bottom: calc(100% + 1.5rem); /* Connects to the card top */
+                left: 50%;
+                width: 3px; /* Thicker */
+                height: 3rem; /* Length of the vertical line */
+                background-color: #4a5568; /* Gray line color */
+                transform: translateX(-50%);
+                z-index: 5; /* Behind the card */
+            }
+        }
+
+        /* Responsive adjustments for mobile: stacking and single vertical line */
+        @media (max-width: 767px) { /* below md breakpoint */
+            .skill-card-connector {
+                position: relative;
+            }
+            .skill-card-connector:not(:last-child)::after { /* Line between stacked cards */
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 100%;
+                width: 3px;
+                height: 2rem; /* Space between cards */
+                background-color: #4a5568;
+                transform: translateX(-50%);
+                z-index: 5;
+            }
+        }
+
+        /* Skill tag styling */
+        .skill-tag {
+            background-color: #374151; /* bg-gray-700 */
+            color: #7dd3fc; /* text-blue-300 */
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 600; /* font-semibold */
+            padding: 0.25rem 0.75rem; /* px-3 py-1 */
+            border-radius: 9999px; /* rounded-full */
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06); /* shadow-md */
+            transition: all 0.2s ease-in-out; /* transition-all duration-200 ease-in-out */
+            display: inline-block;
+        }
+        .skill-tag:hover {
+            background-color: #2563eb; /* hover:bg-blue-600 */
+            color: #fff; /* hover:text-white */
+            transform: scale(1.05); /* hover:scale-105 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-screen flex flex-col gradient-bg dark:bg-gray-900 dark:text-gray-100">
+
+  <header class="bg-blue-800 text-white p-6 shadow-md dark:bg-blue-950">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Pavan R</h1>
+      <nav class="flex items-center space-x-4">
+        <a href="index.html" class="text-white hover:underline">Home</a>
+        <a href="about.html" class="text-white hover:underline">About</a>
+        <a href="projects.html" class="text-white hover:underline">Projects</a>
+        <a href="certifications.html" class="text-white hover:underline">Certifications</a>
+        <a href="contact.html" class="text-white hover:underline">Contact</a>
+        <button id="theme-toggle" type="button" class="text-gray-200 dark:text-gray-400 hover:bg-blue-700 dark:hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm p-2.5">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.292 13.75a8.995 8.995 0 0 1-10.4-10.4A8.995 8.995 0 0 0 10 18a8.995 8.995 0 0 0 7.292-4.25z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm4.356 2.356a1 1 0 0 1 0 1.414l-.707.707a1 1 0 0 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zm-8.712 0a1 1 0 0 1 1.414 0l.707.707a1 1 0 0 1-1.414 1.414l-.707-.707a1 1 0 0 1 0-1.414zM10 15a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm-4.356-2.356a1 1 0 0 1 0-1.414l.707-.707a1 1 0 0 1 1.414 1.414l-.707.707a1 1 0 0 1-1.414 0zm8.712 0a1 1 0 0 1-1.414 0l-.707-.707a1 1 0 0 1 1.414-1.414l.707.707a1 1 0 0 1 0 1.414zM3 10a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm14 0a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2h-1a1 1 0 0 1-1-1zM10 4.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-grow flex items-center justify-center py-10 px-4 relative">
+    <div class="text-center w-full max-w-5xl">
+        <div class="skills-heading-box inline-block mb-16">
+            <h2 class="text-3xl font-bold">MY SKILLS</h2>
+        </div>
+
+        <div class="skill-category-line absolute left-1/2 transform -translate-x-1/2" style="width: 80%;"></div>
+
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-x-16 mt-8 relative z-20">
+
+            <div class="flex flex-col items-center relative skill-card-connector">
+                <div class="flex flex-wrap justify-center gap-3 p-4 bg-gray-800 rounded-xl shadow-xl border border-blue-600 dark:bg-gray-800 dark:border-blue-700">
+                    <span class="skill-tag">HTML</span>
+                    <span class="skill-tag">CSS</span>
+                    <span class="skill-tag">Tailwind CSS</span>
+                    <span class="skill-tag">Responsive Design</span>
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Next.js</span>
+                    <span class="skill-tag">Vite</span>
+                    <span class="skill-tag">jQuery</span>
+                    <span class="skill-tag">REST APIs</span>
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">CI/CD Basics</span>
+                </div>
+                <p class="text-center text-sm text-gray-400 mt-2 font-semibold">Web Development</p>
+            </div>
+
+            <div class="flex flex-col items-center relative skill-card-connector">
+                <div class="flex flex-wrap justify-center gap-3 p-4 bg-gray-800 rounded-xl shadow-xl border border-green-600 dark:bg-gray-800 dark:border-green-700">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">C</span>
+                    <span class="skill-tag">R</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">MySQL</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">Flask</span>
+                    <span class="skill-tag">Node.js Basics</span>
+                </div>
+                <p class="text-center text-sm text-gray-400 mt-2 font-semibold">Programming & Databases</p>
+            </div>
+
+            <div class="flex flex-col items-center relative skill-card-connector">
+                <div class="flex flex-wrap justify-center gap-3 p-4 bg-gray-800 rounded-xl shadow-xl border border-purple-600 dark:bg-gray-800 dark:border-purple-700">
+                    <span class="skill-tag">Data Analysis</span>
+                    <span class="skill-tag">Data Visualization</span>
+                    <span class="skill-tag">Machine Learning Basics</span>
+                    <span class="skill-tag">Excel</span>
+                    <span class="skill-tag">Google Sheets</span>
+                    <span class="skill-tag">Power BI</span>
+                    <span class="skill-tag">Jupyter Notebooks</span>
+                    <span class="skill-tag">Azure AI Fundamentals</span>
+                    <span class="skill-tag">AWS Basics</span>
+                </div>
+                <p class="text-center text-sm text-gray-400 mt-2 font-semibold">Data Science & Tools</p>
+            </div>
+        </div>
+
+    </div>
+  </main>
+
+  <footer class="bg-blue-800 text-white text-center p-4 mt-auto dark:bg-blue-950">
+    &copy; 2025 Pavan R. All rights reserved.
+  </footer>
+
+  <script>
+    // Theme toggle JavaScript
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const themeToggleBtn = document.getElementById('theme-toggle');
+
+    // Initial theme setting based on local storage or system preference
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        themeToggleLightIcon.classList.remove('hidden');
+        themeToggleDarkIcon.classList.add('hidden');
+    } else {
+        document.documentElement.classList.remove('dark');
+        themeToggleDarkIcon.classList.remove('hidden');
+        themeToggleLightIcon.classList.add('hidden');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+        // Toggle icons
+        themeToggleDarkIcon.classList.toggle('hidden');
+        themeToggleLightIcon.classList.toggle('hidden');
+
+        // Toggle 'dark' class on <html> element and update localStorage
+        if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        }
+    });
+  </script>
+</body>
+</html>
